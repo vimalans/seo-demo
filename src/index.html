@@ -1,13 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>SeoDemo</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>SeoDemo</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    Hello World!
+  </body>
+  <script>
+    getJSON();
+    function getJSON() {
+      let requestURL = "http://localhost:8390";
+      let request = new XMLHttpRequest();
+      request.open("GET", requestURL);
+      request.responseType = "json";
+      request.send();
+      request.onload = function () {
+        const metaDataList = request.response;
+        console.log(metaDataList);
+        for (var i = 0; i < metaDataList.length; i++) {
+          var obj = metaDataList[i];
+          addMetaTag(obj.property, obj.content);
+        }
+      };
+    }
+    function addMetaTag(prop, content) {
+      var link = document.createElement("meta");
+      link.setAttribute("property", prop);
+      link.content = content;
+      document.getElementsByTagName("head")[0].appendChild(link);
+    }
+  </script>
 </html>
